@@ -1,0 +1,4 @@
+**.key
+venv/*
+**.pyc
+.vscode/*

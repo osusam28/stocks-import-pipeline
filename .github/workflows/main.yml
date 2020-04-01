@@ -53,5 +53,6 @@ jobs:
 
     - name: Install Applications
       run: |
+        cd symbol-extract
         terraform init -input=false
         terraform apply -auto-approve -input=false

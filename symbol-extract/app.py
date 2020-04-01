@@ -13,10 +13,12 @@ def trigger(event, context):
     finn = Finnhub(os.environ['AUTH_KEY'])
     symbols = finn.get(ENDPONT).json()
 
+    file_path = "{}/symbols.json".format(os.environ.get('FILE_PREFIX')) 
+
     client = storage.Client()
     bucket = client.get_bucket(os.environ.get('BUCKET'))
-    blob = bucket.get_blob(os.environ.get('FILE_NAME'))
+    blob = bucket.get_blob(file_path)
 
-    print('saving data to gs://{}/{} ...'.format(os.environ.get('BUCKET'), os.environ.get('FILE_NAME')))
+    print('saving data to gs://{}/{} ...'.format(os.environ.get('BUCKET'), file_path))
     blob.upload_from_string(json.dumps(symbols))
 

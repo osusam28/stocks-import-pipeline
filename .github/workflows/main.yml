@@ -1,0 +1,55 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2
+      
+    - name: Install Terraform
+      uses: little-core-labs/install-terraform@v1.0.0
+      with:
+        # Version of terraform to download
+        version: 0.12.21
+        
+    - name: Setup Python
+      uses: actions/setup-python@v1.2.0
+      with:
+        python-version: 3.8
+
+    - name: File Actions
+      run: |
+        cp -r lib symbol-extract
+        gsutil cp gs://stocks-sandbox.appspot.com/keyfiles/stocks-sandbox-keyfile.json keyfile.json
+        
+    - name: Setup gcloud environment
+      uses: GoogleCloudPlatform/github-actions@0.1.2
+      with:
+        version: 275.0.0
+        service_account_key: keyfile.json
+    
+    - name: set environment variables
+      uses: allenevans/set-env@v1.0.0
+      with:
+        GOOGLE_APPLICATION_CREDENTIALS: keyfile.json
+    
+    - name: Run Terraform
+      run: |
+        terraform init -input=false
+        terraform apply -auto-approve -input=false

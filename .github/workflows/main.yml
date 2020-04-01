@@ -51,7 +51,7 @@ jobs:
       with:
         TF_VAR_finnhub_key: ${{ secrets.FINNHUB_API_KEY }}
     
-    # - name: Run Terraform
-    #   run: |
-    #     terraform init -input=false
-    #     terraform apply -auto-approve -input=false
+    - name: Run Terraform
+      run: |
+        terraform init -input=false
+        terraform apply -auto-approve -input=false

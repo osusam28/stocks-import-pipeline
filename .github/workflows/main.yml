@@ -21,12 +21,6 @@ jobs:
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
-      
-    - name: Install Terraform
-      uses: little-core-labs/install-terraform@v1.0.0
-      with:
-        # Version of terraform to download
-        version: 0.12.21
         
     - name: Setup Python
       uses: actions/setup-python@v1.2.0
@@ -50,9 +44,12 @@ jobs:
       uses: allenevans/set-env@v1.0.0
       with:
         TF_VAR_finnhub_key: ${{ secrets.FINNHUB_API_KEY }}
-        GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.SERVICE_ACCOUNT_KEY }}
-    
-    - name: Run Terraform
+
+    - name: Install/Run Terraform
+      uses: little-core-labs/install-terraform@v1.0.0
+      with:
+        # Version of terraform to download
+        version: 0.12.21
       run: |
-        terraform init -input=false
-        terraform apply -auto-approve -input=false
+      terraform init -input=false
+      terraform apply -auto-approve -input=false

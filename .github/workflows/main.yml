@@ -50,6 +50,7 @@ jobs:
       uses: allenevans/set-env@v1.0.0
       with:
         TF_VAR_finnhub_key: ${{ secrets.FINNHUB_API_KEY }}
+        GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.SERVICE_ACCOUNT_KEY }}
     
     - name: Run Terraform
       run: |

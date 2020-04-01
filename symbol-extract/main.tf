@@ -27,6 +27,18 @@ resource "google_storage_bucket_acl" "image-store-acl" {
   ]
 }
 
+resource "google_cloud_scheduler_job" "job" {
+  name        = "symbols-extract-job"
+  description = "Kicks off extract job for ticker symbols"
+  schedule    = "* 12 * * *"
+
+  pubsub_target {
+    # topic.id is the topic's full resource name.
+    topic_name = "${google_pubsub_topic.topic.id}"
+    data       = "${base64encode("message")}"
+  }
+}
+
 resource "google_cloudfunctions_function" "symbol_extract_function" {
   name = "symbol-extract-function"
 

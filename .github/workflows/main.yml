@@ -30,7 +30,8 @@ jobs:
     - name: Packaging Code
       run: |
         cp -r lib symbol-extract
-        zip -r symbol-extract/code.zip symbol-extract 
+        cd symbol-extract 
+        zip -r code.zip *
     
     - name: Gcloud Setup
       uses: GoogleCloudPlatform/github-actions/setup-gcloud@master

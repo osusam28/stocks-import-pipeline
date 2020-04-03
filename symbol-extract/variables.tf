@@ -10,3 +10,7 @@ variable "region" {
 variable "finnhub_key" {
   default = ""
 }
+variable "project" {
+  default = "stocks-sandbox"
+}
+

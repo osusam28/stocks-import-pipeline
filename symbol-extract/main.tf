@@ -52,7 +52,7 @@ resource "google_storage_bucket_object" "code_zip" {
 resource "google_cloud_scheduler_job" "job" {
   name        = "symbols-extract-job"
   description = "Kicks off extract job for ticker symbols"
-  schedule    = "* 12 * * *"
+  schedule    = "0 8 * * *"
 
   pubsub_target {
     # topic.id is the topic's full resource name.

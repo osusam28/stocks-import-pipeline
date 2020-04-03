@@ -43,10 +43,10 @@ resource "google_cloudfunctions_function" "symbol_extract_function" {
   name = "symbol-extract-function"
 
   runtime = "python37"
-  available_memory_mb = 250
+  available_memory_mb = 256
 
   entry_point = "trigger"
-  
+
   event_trigger {
       event_type = "google.pubsub.topic.publish"
       resource = "${google_pubsub_topic.topic.id}"

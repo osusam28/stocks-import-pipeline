@@ -24,15 +24,6 @@ resource "google_storage_bucket" "artifact_bucket" {
   name          = "stocks-sandbox-artifact-bucket"
   location      = "US"
   force_destroy = true
-
-  lifecycle_rule {
-    condition {
-      age = "30"
-    }
-    action {
-      type = "Delete"
-    }
-  }
 }
 
 resource "google_storage_bucket_acl" "image-store-acl" {
@@ -44,7 +35,7 @@ resource "google_storage_bucket_acl" "image-store-acl" {
 }
 
 resource "google_storage_bucket_object" "code_zip" {
-  name   = "artifacts/symbol-extract/${formatdate("YYYY-MM-DD-hh-mm", timestamp())}/code.zip"
+  name   = "artifacts/symbol-extract/code.zip"
   source = "code.zip"
   bucket = "${google_storage_bucket.artifact_bucket.name}"
 }

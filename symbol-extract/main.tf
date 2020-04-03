@@ -24,7 +24,7 @@ resource "google_storage_bucket_acl" "image-store-acl" {
   bucket = "${google_storage_bucket.data_bucket.name}"
 
   role_entity = [
-    "OWNER:${var.service_account}"
+    "OWNER:user-${var.service_account}"
   ]
 }
 
@@ -40,6 +40,7 @@ resource "google_cloud_scheduler_job" "job" {
   }
 }
 
+/*
 resource "google_cloudfunctions_function" "symbol_extract_function" {
   name = "symbol-extract-function"
 
@@ -62,7 +63,6 @@ resource "google_cloudfunctions_function" "symbol_extract_function" {
   }
 }
 
-/*
 resource "google_storage_bucket" "artifact_bucket" {
   name          = "stocks-sandbox-artifact-bucket"
   location      = "US"

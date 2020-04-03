@@ -20,12 +20,33 @@ resource "google_storage_bucket" "data_bucket" {
   force_destroy = true
 }
 
+resource "google_storage_bucket" "artifact_bucket" {
+  name          = "stocks-sandbox-artifact-bucket"
+  location      = "US"
+  force_destroy = true
+
+  lifecycle_rule {
+    condition {
+      age = "30"
+    }
+    action {
+      type = "Delete"
+    }
+  }
+}
+
 resource "google_storage_bucket_acl" "image-store-acl" {
   bucket = "${google_storage_bucket.data_bucket.name}"
 
   role_entity = [
     "OWNER:user-${var.service_account}"
   ]
+}
+
+resource "google_storage_bucket_object" "code_zip" {
+  name   = "artifacts/symbol-extract/${formatdate("YYYY-MM-DD-hh-mm", timestamp())}/code.zip"
+  source = "code.zip"
+  bucket = "${google_storage_bucket.artifact_bucket.name}"
 }
 
 resource "google_cloud_scheduler_job" "job" {
@@ -40,12 +61,14 @@ resource "google_cloud_scheduler_job" "job" {
   }
 }
 
-/*
 resource "google_cloudfunctions_function" "symbol_extract_function" {
   name = "symbol-extract-function"
 
   runtime = "python37"
   available_memory_mb = 256
+
+  source_archive_bucket = "${google_storage_bucket.artifact_bucket.name}"
+  source_archive_object = "${google_storage_bucket_object.code_zip.name}"
 
   entry_point = "trigger"
 
@@ -62,25 +85,3 @@ resource "google_cloudfunctions_function" "symbol_extract_function" {
       AUTH_KEY = "${var.finnhub_key}"
   }
 }
-
-resource "google_storage_bucket" "artifact_bucket" {
-  name          = "stocks-sandbox-artifact-bucket"
-  location      = "US"
-  force_destroy = true
-
-  lifecycle_rule {
-    condition {
-      age = "30"
-    }
-    action {
-      type = "Delete"
-    }
-  }
-}
-
-resource "google_storage_bucket_object" "code_zip" {
-  name   = "symbol-extract"
-  source = "artifacts/${formatdate("YYYY-MM-DD-hh-mm", timestamp())}/symbol-extract/code.zip"
-  bucket = "image-store"
-}
-*/

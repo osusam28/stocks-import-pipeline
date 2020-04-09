@@ -55,7 +55,5 @@ jobs:
 
     - name: Run Terraform
       run: |
-        cd symbol-extract
         terraform init -input=false
-        terraform destroy -auto-approve
-        # terraform apply -auto-approve -input=false
+        terraform apply -auto-approve -input=false -var-file="sandbox.tfvars"

@@ -19,7 +19,7 @@ module "shared" {
 module "symbol_extract" {
   source = "./symbol-extract"
   service_account = "${var.finnhub_service_account}"
-  finnhub_key = "${var.finnhub_key}"
+  finnhub_key = "${var.FINNHUB_KEY}"
   artifact_bucket_name = "${module.shared.artifact_bucket_name}"
   data_bucket_name = "${module.shared.data_bucket_name}"
 }

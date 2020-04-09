@@ -35,7 +35,7 @@ resource "google_storage_bucket_acl" "image-store-acl" {
 }
 
 resource "google_storage_bucket_object" "code_zip" {
-  name   = "artifacts/symbol-extract/code.zip"
+  name   = "artifacts/symbol-extract/${formatdate("YYYY-MM-DD-hh-mm", timestamp())}/code.zip"
   source = "code.zip"
   bucket = "${google_storage_bucket.artifact_bucket.name}"
 }

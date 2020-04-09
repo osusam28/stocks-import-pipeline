@@ -12,7 +12,7 @@ terraform {
 
 module "shared" {
   source = "./shared"
-  service_account = "${var.finnhub_service_account}"
+  finnhub_service_account = "${var.finnhub_service_account}"
 }
 
 

@@ -57,4 +57,5 @@ jobs:
       run: |
         cd symbol-extract
         terraform init -input=false
-        terraform apply -auto-approve -input=false
+        terraform destroy -input=false
+        # terraform apply -auto-approve -input=false

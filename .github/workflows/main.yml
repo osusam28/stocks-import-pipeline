@@ -55,5 +55,6 @@ jobs:
 
     - name: Run Terraform
       run: |
-        terraform init -input=false
-        terraform apply -auto-approve -input=false -var-file="sandbox.tfvars"
+        echo ${TF_VAR_finnhub_key}
+        # terraform init -input=false
+        # terraform apply -auto-approve -input=false -var-file="sandbox.tfvars"

@@ -21,7 +21,7 @@ def trigger(event, context):
 
     client = storage.Client()
     bucket = client.get_bucket(os.environ.get('BUCKET'))
-    blob = bucket.get_blob(file_path)
+    blob = bucket.blob(file_path)
 
     print('saving data to gs://{}/{} ...'.format(os.environ.get('BUCKET'), file_path))
     blob.upload_from_string(json.dumps(symbols))

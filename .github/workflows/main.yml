@@ -32,6 +32,8 @@ jobs:
         cp -r lib symbol-extract
         cd symbol-extract 
         zip -r code.zip *
+        cd ../symbol-broadcast-trigger
+        zip -r code.zip *
     
     - name: Gcloud Setup
       uses: GoogleCloudPlatform/github-actions/setup-gcloud@master

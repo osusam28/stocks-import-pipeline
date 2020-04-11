@@ -23,3 +23,11 @@ module "symbol_extract" {
   artifact_bucket_name = "${module.shared.artifact_bucket_name}"
   data_bucket_name = "${module.shared.data_bucket_name}"
 }
+
+module "symbol_broadcast_trigger" {
+  source = "./symbol-broadcast-trigger"
+  project_id = "${var.project}"
+  service_account = "${var.finnhub_service_account}"
+  artifact_bucket_name = "${module.shared.artifact_bucket_name}"
+  data_bucket_name = "${module.shared.data_bucket_name}"
+}

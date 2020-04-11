@@ -2,7 +2,7 @@ from google.cloud import pubsub_v1
 
 import os
 
-def hello_gcs_generic(data, context):
+def broadcast(data, context):
 
     print('Event ID: {}'.format(context.event_id))
     print('Event type: {}'.format(context.event_type))

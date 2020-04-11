@@ -17,7 +17,7 @@ resource "google_cloudfunctions_function" "symbol_broadcasttrigger_function" {
   source_archive_bucket = "${google_storage_bucket_object.code_zip.bucket}"
   source_archive_object = "${google_storage_bucket_object.code_zip.name}"
 
-  entry_point = "trigger"
+  entry_point = "broadcast"
 
   event_trigger {
       event_type = "google.storage.object.finalize"

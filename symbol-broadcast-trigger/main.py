@@ -1,6 +1,7 @@
 from google.cloud import pubsub_v1
 
 import os
+import json
 
 def broadcast(data, context):
 
@@ -18,7 +19,11 @@ def broadcast(data, context):
         topic_name = os.environ['PUBSUB_TOPIC_NAME']
 
         topic_path = publisher.topic_path(project_id, topic_name)
-        message = 'gs://{}/{}'.format(data['bucket'], data['name'])
+        message_json = {
+            'bucket': data['bucket'],
+            'name': data['name']
+        }
+        message = str(json.dumps(message_json))
 
         print('publishing message {} ...'.format(message))
 
